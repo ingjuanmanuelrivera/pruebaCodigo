@@ -1,0 +1,314 @@
+<h2 class="content-block">Prueba Dane - Ing. Juan Manuel Rivera Cabezas</h2>
+<div class="content-block">
+
+
+  <div class="dx-card responsive-paddings" >
+
+    <form action="/formulario" (submit)="guardarPrueba()" >
+
+      <dx-form id="formPrueba" [showColonAfterLabel]="true">
+        <dxi-item itemType="group" cssClass="first-group" [colCount]="6" caption="Capitulo I">
+          <dxi-item dataField="pais"  [colSpan]="3"  [label]="{  text: '1. ¿Cuál es su país de residencia permanente?' }"></dxi-item>
+          <dxi-item dataField="nacionalidad"  [colSpan]="3"  [label]="{  text: '2.	¿Cuál es su nacionalidad?' }"></dxi-item>
+          <dxi-item dataField="sexo" [colSpan]="3" [label]="{  text: '3.	Sexo' }"  editorType="dxRadioGroup" [editorOptions]="{ items: listaSexo, layout: 'horizontal' }"></dxi-item>
+          <dxi-item dataField="edad" [colSpan]="3"  [editorOptions]="{ format: {type:'#'} }">
+            <dxi-validation-rule type="numeric" message="Campo de tipo númerico, ingresar un valor númerico de 0 a 120">
+            </dxi-validation-rule>
+            <dxi-validation-rule type="required" message="Edad es requerida, usar un valor númerico de 0 a 120">
+            </dxi-validation-rule>
+            <dxi-validation-rule type="range" [min]="0" [max]="120" message="Valor minimo es 0 y maximo es de 120">
+            </dxi-validation-rule>
+          </dxi-item>
+          <dxi-item dataField="acompanamiento" [colSpan]="2" [label]="{  text: '4.	¿Con quien viaja?' }"  editorType="dxRadioGroup" [editorOptions]="{ items: listaAcompanamiento, layout: 'horizontal',  onValueChanged: operarAcompanamiento }">
+          </dxi-item>
+          <dxi-item dataField="otro_acompanamiento"  [visible]="mostrarOtro" [colSpan]="1"  [label]="{ text: 'Otro Acompañamiento' }" ></dxi-item>
+          <dxi-item></dxi-item>
+
+          <dxi-item dataField="cuantasPersonasViajan" [label]="{  text: '5.	¿Incluyéndolo a usted con cuantas personas viaja?' }"  [visible]="mostrarCuantasPersonasViajan" [colSpan]="3"  [editorOptions]="{ format: {type:'#'} }">
+            <dxi-validation-rule type="numeric" message="Error, ingresar un valor númerico">
+            </dxi-validation-rule>
+          </dxi-item>
+
+        </dxi-item>
+
+        <dxi-item itemType="group" cssClass="first-group" [colCount]="6" caption="Capitulo II">
+          <div class="options">
+            <div class="caption">6. ¿Cuál fue el principal motivo de este viaje?</div>
+            <div class="option">
+              <dx-radio-group
+                label=" 6.   ¿Cuál fue el principal motivo de este viaje? '"
+                [items]="listaMotivos"
+                valueExpr= ID
+                displayExpr=Name
+                (onValueChanged)="validarMotivo($event)"
+              >
+              </dx-radio-group>
+            </div>
+          </div>
+
+          <div class="options" *ngIf="verOpc7 === true" id="bloque7">
+            <div class="caption">7.	¿Cómo organizó su viaje?</div>
+            <div class="option" colspan="3">
+              <br>
+              <dx-check-box
+                text="Paquete turístico organizado por una agencia de viajes en Colombia"
+                [value]="false"
+                name="motivo"
+              ></dx-check-box><br><br>
+            </div>
+            <div class="option" >
+              <dx-check-box
+                text="Paquete turístico organizado por una agencia de viajes en el país de visita"
+                [value]="false"
+                name="motivo"
+              ></dx-check-box><br><br>
+            </div>
+            <div class="option">
+              <dx-check-box
+                text="Paquete turístico organizado por terceros que no sean agencias de viajes"
+                [value]="false"
+                name="motivo"
+              ></dx-check-box><br><br>
+            </div>
+            <div class="option">
+              <dx-check-box
+                text="Viaje organizado por cuenta propia"
+                [value]="false"
+                name="motivo"
+              ></dx-check-box><br><br>
+            </div>
+          </div>
+
+          <div class="options">
+            <div class="caption">8.	¿Qué tipo de servicios comprendió el paquete turístico? </div>
+            <div class="option">
+              <br>
+              <dx-check-box
+                text="Alojamiento"
+                [value]="false"
+                name="organizo"
+              ></dx-check-box><br><br>
+            </div>
+            <div class="option">
+              <dx-check-box
+                text="Transporte internacional "
+                [value]="false"
+                name="organizo"
+              ></dx-check-box><br><br>
+            </div>
+            <div class="option">
+              <dx-check-box
+                text="Alimentos y bebidas "
+                [value]="false"
+                name="organizo"
+              ></dx-check-box><br><br>
+            </div>
+            <div class="option">
+              <dx-check-box
+                text="Servicios culturales y de entretenimiento"
+                [value]="false"
+                name="organizo"
+              ></dx-check-box><br><br>
+            </div>
+            <div class="option">
+              <dx-check-box
+                text="Servicios deportivos y recreacionales"
+                [value]="false"
+                name="organizo"
+              ></dx-check-box><br><br>
+            </div>
+            <div class="option">
+              <dx-check-box
+                text="Tours en destino (con servicio de  guía)"
+                [value]="false"
+                name="organizo"
+              ></dx-check-box><br><br>
+            </div>
+            <div class="option">
+              <dx-check-box
+                text="Tours en destino (con servicio de  guía)"
+                [value]="false"
+                name="organizo"
+              ></dx-check-box><br><br>
+            </div>
+            <div class="option">
+              <dx-check-box
+                text="Transporte aéreo interno en el destino"
+                [value]="false"
+                name="organizo"
+              ></dx-check-box><br><br>
+            </div>
+            <div class="option">
+              <dx-check-box
+                text="Otro transporte interno"
+                [value]="false"
+                name="organizo"
+              ></dx-check-box><br><br>
+            </div>
+          </div>
+
+          <!--            <dxi-item
+          dataField="motivo"
+          editorType="dxRadioGroup"
+          [label]="{  text: ' 6.   ¿Cuál fue el principal motivo de este viaje? ' }"
+          [editorOptions]="{ items: listaMotivos, valueExpr: 'ID', displayExpr: 'Name', layout: 'vertical' }"
+          [colSpan]="6"
+
+          ></dxi-item>
+            -->
+
+
+
+
+        </dxi-item>
+
+        <dxi-item itemType="group" cssClass="first-group" [colCount]="6" caption="Capitulo III">
+          9. Gastos: Registre el valor que fue pagado por Usted, por Terceros que NO hacen parte de su grupo de viaje y por Terceros que SI hacen parte de su grupo de viaje, así como el tipo de moneda utilizado y el número de personas que cubre cada gasto.
+          <br>
+          <table class="dx-table">
+            <tr>
+              <th>Gastos</th>
+              <th>¿Hubo gasto?</th>
+              <th colspan="2">Pagado por usted</th>
+              <th colspan="2">Terceros que NO hacen parte del grupo</th>
+              <th colspan="2">Terceros que SI hacen parte del grupo</th>
+              <th>¿Para cuantas personas?</th>
+            </tr>
+            <tr>
+              <td>
+                Paquete turístico
+              </td>
+              <td>
+                <dx-select-box [items]="listaSiNo" name="si_1"></dx-select-box>
+              </td>
+              <td>
+                <dx-text-box name="valor_pu_1" ></dx-text-box>
+              </td>
+              <td>
+                <dx-select-box [items]="listaTipoMoneda" name="si_pu_1"></dx-select-box>
+              </td>
+              <td>
+                <dx-text-box name="valor_tn_1" ></dx-text-box>
+              </td>
+              <td>
+                <dx-select-box [items]="listaTipoMoneda" name="si_tn_1"></dx-select-box>
+              </td>
+              <td>
+                <dx-text-box name="valor_ts_1" ></dx-text-box>
+              </td>
+              <td>
+                <dx-select-box [items]="listaTipoMoneda" name="si_ts_1"></dx-select-box>
+              </td>
+              <td>
+                <dx-number-box name="valor_tn_1" ></dx-number-box>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+               Transporte Internacional
+              </td>
+              <td>
+                <dx-select-box [items]="listaSiNo" name="si_2"></dx-select-box>
+              </td>
+              <td>
+                <dx-text-box name="valor_pu_2" ></dx-text-box>
+              </td>
+              <td>
+                <dx-select-box [items]="listaTipoMoneda" name="si_pu_2"></dx-select-box>
+              </td>
+              <td>
+                <dx-text-box name="valor_tn_2" ></dx-text-box>
+              </td>
+              <td>
+                <dx-select-box [items]="listaTipoMoneda" name="si_tn_2"></dx-select-box>
+              </td>
+              <td>
+                <dx-text-box name="valor_ts_2" ></dx-text-box>
+              </td>
+              <td>
+                <dx-select-box [items]="listaTipoMoneda" name="si_ts_2"></dx-select-box>
+              </td>
+              <td>
+                <dx-number-box name="valor_tn_2" ></dx-number-box>
+              </td>
+            </tr>
+          </table>
+
+          <br><br>
+          10.	Por favor nombre los países de visita y el número de noches en cada forma de alojamiento utilizado.
+
+
+          <br>
+          <table>
+            <thead>
+            <tr>
+              <th>País de visita</th>
+              <th>Vivienda Propia</th>
+              <th>Hotel / Apartahotel</th>
+              <th>Vivienda familiar
+                o de amigos
+                </th>
+              <th>Vivienda
+                En alquiler
+                </th>
+              <th>Otro tipo de vivienda</th>
+            </tr>
+          </thead>
+            <tbody>
+
+            <tr >
+              <td>
+                <dx-select-box [items]="listaPaises" name="vi_pa_1"></dx-select-box>
+              </td>
+              <td>
+                <dx-number-box name="vi_vi_1" ></dx-number-box>
+              </td>
+              <td>
+                <dx-number-box name="vi_ho_1" ></dx-number-box>
+              </td>
+              <td>
+                <dx-number-box name="vi_fa_1" ></dx-number-box>
+              </td>
+              <td>
+                <dx-number-box name="vi_al_1" ></dx-number-box>
+              </td>
+              <td>
+                <dx-number-box name="vi_ot_1" ></dx-number-box>
+              </td>
+            </tr>
+            <tr >
+              <td>
+                <dx-select-box [items]="listaPaises" name="vi_pa_2"></dx-select-box>
+              </td>
+              <td>
+                <dx-number-box name="vi_vi_2" ></dx-number-box>
+              </td>
+              <td>
+                <dx-number-box name="vi_ho_2" ></dx-number-box>
+              </td>
+              <td>
+                <dx-number-box name="vi_fa_2" ></dx-number-box>
+              </td>
+              <td>
+                <dx-number-box name="vi_al_2" ></dx-number-box>
+              </td>
+              <td>
+                <dx-number-box name="vi_ot_2" ></dx-number-box>
+              </td>
+            </tr>
+          </tbody>
+          </table>
+          <br>
+          <dx-button
+              text="Guardar" type="default" width="120" (onClick)="guardarPrueba()">
+          </dx-button>
+        </dxi-item>
+    </dx-form>
+    </form>
+    <dx-toast [(visible)]="isVisible" [type]="type" message="Guardado de forma exitosa">
+    </dx-toast>
+  </div>
+  
+  
+</div>
